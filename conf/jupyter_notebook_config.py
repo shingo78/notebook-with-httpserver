@@ -1,7 +1,7 @@
 
 c.ServerProxy.servers = {
-    'test-server': {
-        'command': ['/opt/tinyproxy/tinyproxy.sh', '{port}'],
+    'webserver-port-30000': {
+        'command': ['/opt/tinyproxy/tinyproxy.sh', '{port}', '30000'],
         'absolute_url': False
     }
 }

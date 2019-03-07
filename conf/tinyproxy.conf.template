@@ -4,9 +4,9 @@ Group users
 StartServers 1
 MaxClients 10
 
-Port %PORT%
+Port %LISTEN_PORT%
 
 PidFile "tinyproxy.pid"
 LogFile "access.log"
 
-ReversePath "/" "http://localhost:30000/"
+ReversePath "/" "http://localhost:%TARGET_PORT%/"

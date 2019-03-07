@@ -13,8 +13,8 @@ RUN mkdir -p /opt/tinyproxy/ && \
 COPY conf/jupyter_notebook_config.py /opt/tinyproxy/config.py
 
 RUN mkdir -p /opt/tinyproxy/
-COPY tinyproxy.conf.template /opt/tinyproxy/
-COPY tinyproxy.sh /opt/tinyproxy/
+COPY conf/tinyproxy.conf.template /opt/tinyproxy/
+COPY conf/tinyproxy.sh /opt/tinyproxy/
 RUN  chmod +x /opt/tinyproxy/tinyproxy.sh
 
 USER $NB_USER
