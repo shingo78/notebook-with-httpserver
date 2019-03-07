@@ -1,7 +1,7 @@
 
 c.ServerProxy.servers = {
     'test-server': {
-        'command': ['python3', '-m', 'http.server', '{port}'],
+        'command': ['/opt/tinyproxy/tinyproxy.sh', '{port}'],
         'absolute_url': False
     }
 }
