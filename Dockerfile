@@ -21,7 +21,7 @@ RUN  chmod +x /opt/tinyproxy/tinyproxy.sh
 ENV CONDA2_DIR=/opt/conda2
 RUN cd /tmp && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    echo "458324438b7b0e5afcc272b63d44195d *Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
+    echo "4be03f925e992a8eda03758b72a77298 *Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA2_DIR && \
     rm Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     $CONDA2_DIR/bin/conda config --system --prepend channels conda-forge && \
