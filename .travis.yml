@@ -8,4 +8,5 @@ before_install:
 
 script:
   - docker run --rm yacchin1205/notebook-with-httpserver jupyter notebook --version
+  - docker run --rm yacchin1205/notebook-with-httpserver papermill '/home/jovyan/tests/98_Test_Python2.ipynb' /tmp/Result.ipynb
   - docker run --rm yacchin1205/notebook-with-httpserver papermill '/home/jovyan/tests/99_Test_Python3.ipynb' /tmp/Result.ipynb
