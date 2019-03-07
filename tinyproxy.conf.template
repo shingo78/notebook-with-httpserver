@@ -1,0 +1,12 @@
+User bit_kun
+Group users
+
+StartServers 1
+MaxClients 10
+
+Port %PORT%
+
+PidFile "tinyproxy.pid"
+LogFile "access.log"
+
+ReversePath "/" "http://localhost:30000/"
