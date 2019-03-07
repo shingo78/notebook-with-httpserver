@@ -1,0 +1,11 @@
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t yacchin1205/notebook-with-httpserver .
+
+script:
+  - docker run --rm yacchin1205/notebook-with-httpserver jupyter notebook --version
+  - docker run --rm yacchin1205/notebook-with-httpserver papermill '/home/jovyan/tests/99_Test_Python3.ipynb' /tmp/Result.ipynb
