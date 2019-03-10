@@ -1,7 +1,7 @@
 
 c.ServerProxy.servers = {
-    'webserver-port-30000': {
-        'command': ['/opt/tinyproxy/tinyproxy.sh', '{port}', '30000'],
+    'webserver-port-80': {
+        'command': ['/opt/tinyproxy/tinyproxy.sh', '{port}', '80'],
         'absolute_url': False
     }
 }
