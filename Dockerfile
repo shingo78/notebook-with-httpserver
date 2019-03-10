@@ -1,21 +1,6 @@
 FROM jupyter/scipy-notebook
 
 USER root
-RUN pip --no-cache-dir install jupyter-server-proxy papermill
-RUN apt-get update && apt-get install -y tinyproxy && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Configurations
-RUN mkdir -p /usr/local/bin/before-notebook.d
-COPY conf/deploy-config.sh /usr/local/bin/before-notebook.d/
-RUN mkdir -p /opt/tinyproxy/ && \
-    chmod +x /usr/local/bin/before-notebook.d/*.sh
-COPY conf/jupyter_notebook_config.py /opt/tinyproxy/config.py
-
-RUN mkdir -p /opt/tinyproxy/
-COPY conf/tinyproxy.conf.template /opt/tinyproxy/
-COPY conf/tinyproxy.sh /opt/tinyproxy/
-RUN  chmod +x /opt/tinyproxy/tinyproxy.sh
 
 # Python2
 ENV CONDA2_DIR=/opt/conda2
@@ -68,6 +53,22 @@ RUN $CONDA2_DIR/bin/conda install --quiet --yes \
     $CONDA2_DIR/bin/conda remove --quiet --yes --force qt pyqt && \
     $CONDA2_DIR/bin/conda clean -tipsy && \
     fix-permissions $CONDA2_DIR
+
+RUN pip --no-cache-dir install jupyter-server-proxy papermill
+RUN apt-get update && apt-get install -y tinyproxy && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Configurations
+RUN mkdir -p /usr/local/bin/before-notebook.d
+COPY conf/deploy-config.sh /usr/local/bin/before-notebook.d/
+RUN mkdir -p /opt/tinyproxy/ && \
+    chmod +x /usr/local/bin/before-notebook.d/*.sh
+COPY conf/jupyter_notebook_config.py /opt/tinyproxy/config.py
+
+RUN mkdir -p /opt/tinyproxy/
+COPY conf/tinyproxy.conf.template /opt/tinyproxy/
+COPY conf/tinyproxy.sh /opt/tinyproxy/
+RUN  chmod +x /opt/tinyproxy/tinyproxy.sh
 
 USER $NB_USER
 
