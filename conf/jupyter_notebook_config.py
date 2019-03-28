@@ -5,3 +5,6 @@ c.ServerProxy.servers = {
         'absolute_url': False
     }
 }
+
+c.NotebookApp.kernel_manager_class = 'coursewarekernelmanager.CoursewareKernelManager'
+c.CoursewareKernelManager.max_kernels = 10

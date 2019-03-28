@@ -55,6 +55,7 @@ RUN $CONDA2_DIR/bin/conda install --quiet --yes \
     fix-permissions $CONDA2_DIR
 
 RUN pip --no-cache-dir install jupyter-server-proxy papermill
+RUN pip --no-cache-dir install "git+https://github.com/NII-cloud-operation/CoursewareHub-LC_platform.git#egg=coursewarekernelmanager&subdirectory=jupyterhub-singleuser/kernelmanager"
 RUN apt-get update && apt-get install -y tinyproxy && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
