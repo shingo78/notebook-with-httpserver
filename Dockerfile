@@ -61,7 +61,7 @@ RUN apt-get update && apt-get install -y tinyproxy && \
 
 # Utility
 RUN pip --no-cache-dir install ansible && \
-    apt-get update && apt-get install -y rsync openssh-client && \
+    apt-get update && apt-get install -y rsync openssh-client jq && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Configurations
