@@ -73,6 +73,16 @@ COPY conf/tinyproxy.sh /opt/tinyproxy/
 RUN  chmod +x /opt/tinyproxy/tinyproxy.sh && \
      cat /opt/tinyproxy/config.py >> /etc/jupyter/jupyter_notebook_config.py
 
+# Extensions
+RUN pip --no-cache-dir install \
+        git+https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff.git \
+        https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master && \
+    jupyter nbextension install --py nblineage && \
+    jupyter nbextension install --py lc_notebook_diff
+COPY conf/notebook-diff-nbextension.json $CONDA_DIR/etc/jupyter/nbconfig/tree.d/
+COPY conf/nblineage-nbextension.json $CONDA_DIR/etc/jupyter/nbconfig/notebook.d/
+COPY conf/nblineage-serverextension.json $CONDA_DIR/etc/jupyter/jupyter_notebook_config.d/
+
 USER $NB_USER
 
 # Test files
