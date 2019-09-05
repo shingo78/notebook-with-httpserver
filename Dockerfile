@@ -85,6 +85,10 @@ RUN  chmod +x /opt/tinyproxy/tinyproxy.sh && \
 RUN jupyter wrapper-kernelspec remove -f bash && \
     jupyter nbextension disable --py lc_run_through --sys-prefix
 
+# Docker
+RUN apt-get update && apt-get install -y make && apt-get autoclean && apt-get clean && apt-get autoremove
+RUN curl -fsSL https://get.docker.com/ | sh
+
 USER $NB_USER
 
 # Test files
