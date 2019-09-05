@@ -1,0 +1,14 @@
+{
+ "display_name": "Python 2",
+ "language": "python",
+ "argv": [
+  "/opt/conda2/bin/python",
+  "-m",
+  "lc_wrapper",
+  "-f",
+  "{connection_file}"
+ ],
+ "env": {
+  "PATH": "/opt/conda2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ }
+}
