@@ -1,4 +1,4 @@
-FROM jupyter/scipy-notebook
+FROM niicloudoperation/notebook
 
 USER root
 
@@ -6,7 +6,7 @@ USER root
 ENV CONDA2_DIR=/opt/conda2
 RUN cd /tmp && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    echo "4be03f925e992a8eda03758b72a77298 *Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
+    echo "faa7cb0b0c8986ac3cacdbbd00fe4168 *Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh" | md5sum -c - && \
     /bin/bash Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh -f -b -p $CONDA2_DIR && \
     rm Miniconda2-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     $CONDA2_DIR/bin/conda config --system --prepend channels conda-forge && \
@@ -54,6 +54,14 @@ RUN $CONDA2_DIR/bin/conda install --quiet --yes \
     $CONDA2_DIR/bin/conda clean -tipsy && \
     fix-permissions $CONDA2_DIR
 
+# extensions for jupyter (python2)
+## Jupyter-LC_wrapper (NII) - https://github.com/NII-cloud-operation/Jupyter-LC_wrapper
+RUN $CONDA2_DIR/bin/pip --no-cache-dir install https://github.com/NII-cloud-operation/Jupyter-LC_wrapper/tarball/master
+
+# Install Python 2 kernelspec
+ADD conf/wrapper-kernels /tmp/wrapper-kernels/
+RUN jupyter wrapper-kernelspec install /tmp/wrapper-kernels/python2 --sys-prefix
+
 RUN pip --no-cache-dir install jupyter-server-proxy papermill
 RUN pip --no-cache-dir install "git+https://github.com/NII-cloud-operation/CoursewareHub-LC_platform.git#egg=coursewarekernelmanager&subdirectory=jupyterhub-singleuser/kernelmanager"
 RUN apt-get update && apt-get install -y tinyproxy && \
@@ -73,15 +81,9 @@ COPY conf/tinyproxy.sh /opt/tinyproxy/
 RUN  chmod +x /opt/tinyproxy/tinyproxy.sh && \
      cat /opt/tinyproxy/config.py >> /etc/jupyter/jupyter_notebook_config.py
 
-# Extensions
-RUN pip --no-cache-dir install \
-        git+https://github.com/NII-cloud-operation/Jupyter-LC_notebook_diff.git \
-        https://github.com/NII-cloud-operation/Jupyter-LC_nblineage/tarball/master && \
-    jupyter nbextension install --py nblineage && \
-    jupyter nbextension install --py lc_notebook_diff
-COPY conf/notebook-diff-nbextension.json $CONDA_DIR/etc/jupyter/nbconfig/tree.d/
-COPY conf/nblineage-nbextension.json $CONDA_DIR/etc/jupyter/nbconfig/notebook.d/
-COPY conf/nblineage-serverextension.json $CONDA_DIR/etc/jupyter/jupyter_notebook_config.d/
+# Disable extensions/kernels
+RUN jupyter wrapper-kernelspec remove -f bash && \
+    jupyter nbextension disable --py lc_run_through --sys-prefix
 
 USER $NB_USER
 
